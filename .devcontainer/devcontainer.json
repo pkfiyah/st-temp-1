@@ -1,0 +1,12 @@
+{
+    "name": "Golang Skill Test League",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "portsAttributes": {
+        "8080": {
+            "label": "Golang ST Remote",
+            "onAutoForward": "notify"
+        }
+    }
+}
