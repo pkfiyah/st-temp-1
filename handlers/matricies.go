@@ -1,71 +1,119 @@
 package handlers
 
 import (
-	"encoding/csv"
 	"fmt"
 	"net/http"
+	"pkfiyah/st-temp-1/utils"
 	"strconv"
 	"strings"
 )
 
 // Provided Echo function code
 func Echo(w http.ResponseWriter, r *http.Request) {
-	records, err := getCSVContents(r)
+	records, err := utils.GetCSVContents(r)
 	if err != nil {
-		w.Write([]byte(fmt.Sprintf("error %s", err.Error())))
+		w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
 		return
 	}
+
 	var response string
 	for _, row := range records {
 		response = fmt.Sprintf("%s%s\n", response, strings.Join(row, ","))
 	}
+
 	fmt.Fprint(w, response)
 }
 
 func Invert(w http.ResponseWriter, r *http.Request) {
-	// TODO
-}
-
-func Flatten(w http.ResponseWriter, r *http.Request) {
-	// TODO
-}
-
-func Sum(w http.ResponseWriter, r *http.Request) {
-	records, err := getCSVContents(r)
+	records, err := utils.GetCSVContents(r)
 	if err != nil {
-		w.Write([]byte(fmt.Sprintf("error %s", err.Error())))
+		w.Write(fmt.Appendf([]byte{}, "error %s", err.Error()))
 		return
 	}
 
-	var sum int64
+	var response string
+	for i := range records {
+		for j := i; j < len(records); j++ {
+			if i != j {
+				temp := records[i][j]
+				records[i][j] = records[j][i]
+				records[j][i] = temp
+			}
+		}
+		response = fmt.Sprintf("%s%s\n", response, strings.Join(records[i], ","))
+	}
+
+	fmt.Fprint(w, response)
+}
+
+func Flatten(w http.ResponseWriter, r *http.Request) {
+	records, err := utils.GetCSVContents(r)
+	if err != nil {
+		w.Write(fmt.Appendf([]byte{}, "error %s", err.Error()))
+		return
+	}
+
+	var response string
+	for _, row := range records {
+		response = fmt.Sprintf("%s%s,", response, strings.Join(row, ","))
+	}
+
+	fmt.Fprintf(w, "%s\n", response[:len(response)-1])
+}
+
+func Sum(w http.ResponseWriter, r *http.Request) {
+	records, err := utils.GetCSVContents(r)
+	if err != nil {
+		w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
+		return
+	}
+
+	sum := 0
 	for i, row := range records {
-		for j, _ := range records[i] {
+		for j := range records[i] {
 			val, err := strconv.ParseInt(row[j], 10, 64)
 			if err != nil {
-				w.Write([]byte(fmt.Sprintf("error %s", err.Error())))
+				if err == strconv.ErrSyntax {
+					continue
+				}
+				w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
 				return
 			}
-			sum += val
+
+			sum += int(val)
 		}
 	}
+
 	fmt.Fprintf(w, "%d\n", sum)
 }
 
 func Multiply(w http.ResponseWriter, r *http.Request) {
-	// TODO
-}
-
-// Input is expected to be a CSV File provided via the "file" form field in the request
-func getCSVContents(r *http.Request) ([][]string, error) {
-	file, _, err := r.FormFile("file")
+	records, err := utils.GetCSVContents(r)
 	if err != nil {
-		return nil, err
+		w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
+		return
 	}
-	defer file.Close()
-	records, err := csv.NewReader(file).ReadAll()
-	if err != nil {
 
-		return nil, err
+	mult := 1
+	for i, row := range records {
+		for j := range records[i] {
+			val, err := strconv.ParseInt(row[j], 10, 64)
+			if err != nil {
+				if err == strconv.ErrSyntax {
+					continue
+				}
+				w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
+				return
+			}
+
+			if val == 0 {
+				mult = 0
+				break
+			}
+
+			mult *= int(val)
+		}
 	}
-	return records, nil
+
+	fmt.Fprintf(w, "%d\n", mult)
 }
