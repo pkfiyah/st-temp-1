@@ -1,7 +1,7 @@
 # League Backend Challenge - Dev Notes
 
 The REPO can be cloned from github at: https://github.com/pkfiyah/st-temp-1
-or downloaded as a .tar from: https://drive.google.com/file/d/1ekgqRY9hiJIrRoGuM-9iv4jBawrt_h4M/view?usp=sharing 
+or downloaded as a .tar from: https://drive.google.com/file/d/1H0xFIuLX9ao-01lzh--TXnnH2oNUe2o4/view?usp=sharing
 and ran in similar fashion to the initial description (from the base folder with go installed: `go run .`)
 
 If using VSCode or another devcontainer capable IDE, it can also be launched as a devcontainer, and ran within the same command as above.
