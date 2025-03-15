@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"pkfiyah/st-temp-1/utils"
@@ -73,7 +74,7 @@ func Sum(w http.ResponseWriter, r *http.Request) {
 		for j := range records[i] {
 			val, err := strconv.ParseInt(row[j], 10, 64)
 			if err != nil {
-				if err == strconv.ErrSyntax {
+				if errors.Is(err, strconv.ErrSyntax) {
 					continue
 				}
 				w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
@@ -99,7 +100,7 @@ func Multiply(w http.ResponseWriter, r *http.Request) {
 		for j := range records[i] {
 			val, err := strconv.ParseInt(row[j], 10, 64)
 			if err != nil {
-				if err == strconv.ErrSyntax {
+				if errors.Is(err, strconv.ErrSyntax) {
 					continue
 				}
 				w.Write(fmt.Appendf([]byte{}, "error %s\n", err.Error()))
