@@ -1,4 +1,27 @@
-# League Backend Challenge
+# League Backend Challenge - Dev Notes
+
+The REPO can be cloned from github at: https://github.com/pkfiyah/st-temp-1
+or downloaded as a .tar from: https://drive.google.com/file/d/1ekgqRY9hiJIrRoGuM-9iv4jBawrt_h4M/view?usp=sharing 
+and ran in similar fashion to the initial description (from the base folder with go installed: `go run .`)
+
+If using VSCode or another devcontainer capable IDE, it can also be launched as a devcontainer, and ran within the same command as above.
+
+Tests should also be runnable from the base folder with `go test ./...`
+
+Math commands ignore non-integer values, but continue with found integers
+
+Middleware ensures properly sized array. Empty values are valid, just requires proper size based on delimiter
+
+Endpoints can be hit with the following commands:
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/echo"
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/invert"
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/flatten"
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/sum"
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/multiply"
+
+Does not account for Int overflow on large multiplication.
+
+# Everything below was provided by League via the e-mail 
 
 In main.go you will find a basic web server written in GoLang. It accepts a single request _/echo_. Extend the webservice with the ability to perform the following operations
 
