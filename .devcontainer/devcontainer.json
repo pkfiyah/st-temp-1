@@ -8,6 +8,5 @@
             "label": "Golang ST Remote",
             "onAutoForward": "notify"
         }
-    },
-    "postStartCommand": "go run ."
+    }
 }
