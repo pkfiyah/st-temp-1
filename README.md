@@ -12,12 +12,12 @@ Math commands ignore non-integer values, but continue with found integers
 
 Middleware ensures properly sized array. Empty values are valid, just requires proper size based on delimiter
 
-Endpoints can be hit with the following commands:
-curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/echo"
-curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/invert"
-curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/flatten"
-curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/sum"
-curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/multiply"
+Endpoints can be hit with the following commands:  
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/echo"  
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/invert"  
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/flatten"  
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/sum"  
+curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/multiply"  
 
 Does not account for Int overflow on large multiplication.
 
