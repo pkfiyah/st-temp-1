@@ -19,7 +19,7 @@ curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/flatten"
 curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/sum"  
 curl -F 'file=@./testfiles/matrix.csv' "localhost:8080/multiply"  
 
-Does not account for Int overflow on large multiplication.
+Does not account for Int overflow on large multiplication/summation.
 
 # Everything below was provided by League via the e-mail 
 
